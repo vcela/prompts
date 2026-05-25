@@ -4,7 +4,11 @@ import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
 export async function GET() {
+  const session = await getServerSession(authOptions);
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   const categories = await prisma.category.findMany({
+    where: { userId: session.user.id },
     include: { _count: { select: { prompts: true } } },
     orderBy: { name: 'asc' },
   });
@@ -23,11 +27,11 @@ export async function POST(request: Request) {
 
   try {
     const category = await prisma.category.create({
-      data: { name: name.trim(), color: color || '#FF3B30' },
+      data: { name: name.trim(), color: color || '#FF3B30', userId: session.user.id },
       include: { _count: { select: { prompts: true } } },
     });
     return NextResponse.json({ ...category, createdAt: category.createdAt.toISOString() });
   } catch {
-    return NextResponse.json({ error: 'Category already exists' }, { status: 400 });
+    return NextResponse.json({ error: 'Kategorie s tímto názvem již existuje' }, { status: 400 });
   }
 }

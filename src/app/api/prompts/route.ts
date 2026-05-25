@@ -20,7 +20,11 @@ function serialize(p: {
 }
 
 export async function GET() {
+  const session = await getServerSession(authOptions);
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
   const prompts = await prisma.prompt.findMany({
+    where: { userId: session.user.id },
     include: { category: true },
     orderBy: { createdAt: 'desc' },
   });
@@ -44,6 +48,7 @@ export async function POST(request: Request) {
       content: content.trim(),
       tags: JSON.stringify(Array.isArray(tags) ? tags : []),
       categoryId: categoryId || null,
+      userId: session.user.id,
     },
     include: { category: true },
   });

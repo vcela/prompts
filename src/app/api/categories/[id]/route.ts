@@ -7,7 +7,7 @@ export async function DELETE(_: Request, { params }: { params: { id: string } })
   const session = await getServerSession(authOptions);
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  await prisma.category.delete({ where: { id: params.id } });
+  await prisma.category.delete({ where: { id: params.id, userId: session.user.id } });
   return NextResponse.json({ success: true });
 }
 
@@ -17,7 +17,7 @@ export async function PATCH(request: Request, { params }: { params: { id: string
 
   const body = await request.json();
   const category = await prisma.category.update({
-    where: { id: params.id },
+    where: { id: params.id, userId: session.user.id },
     data: { name: body.name?.trim(), color: body.color },
     include: { _count: { select: { prompts: true } } },
   });
