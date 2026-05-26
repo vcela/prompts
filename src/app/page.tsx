@@ -1,17 +1,22 @@
-import { prisma } from '@/lib/prisma';
+import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
 import { Dashboard } from '@/components/Dashboard';
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
 
+  if (!session) redirect('/login');
+
   const [rawPrompts, rawCategories] = await Promise.all([
     prisma.prompt.findMany({
+      where: { userId: session.user.id },
       include: { category: true },
       orderBy: { createdAt: 'desc' },
     }),
     prisma.category.findMany({
+      where: { userId: session.user.id },
       include: { _count: { select: { prompts: true } } },
       orderBy: { name: 'asc' },
     }),
@@ -36,8 +41,8 @@ export default async function Home() {
     <Dashboard
       initialPrompts={prompts}
       initialCategories={categories}
-      isAuthenticated={!!session}
-      userEmail={session?.user?.email ?? undefined}
+      isAuthenticated={true}
+      userEmail={session.user.email ?? undefined}
     />
   );
 }
