@@ -7,16 +7,16 @@ export async function POST(request: Request) {
   const { name, email, password } = body;
 
   if (!email?.trim() || !password?.trim()) {
-    return NextResponse.json({ error: 'Email a heslo jsou povinné' }, { status: 400 });
+    return NextResponse.json({ error: 'Email and password are required' }, { status: 400 });
   }
 
   if (password.length < 8) {
-    return NextResponse.json({ error: 'Heslo musí mít alespoň 8 znaků' }, { status: 400 });
+    return NextResponse.json({ error: 'Password must be at least 8 characters' }, { status: 400 });
   }
 
   const existing = await prisma.user.findUnique({ where: { email } });
   if (existing) {
-    return NextResponse.json({ error: 'Tento email je již zaregistrován' }, { status: 400 });
+    return NextResponse.json({ error: 'This email is already registered' }, { status: 400 });
   }
 
   const hashed = await bcrypt.hash(password, 12);

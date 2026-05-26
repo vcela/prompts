@@ -48,7 +48,7 @@ export function PromptCard({ prompt, isAuthenticated, onCopy, onEdit, onDelete }
             className="text-xs font-semibold mt-1 transition-colors"
             style={{ color: 'var(--accent)' }}
           >
-            {expanded ? 'Méně ↑' : 'Více ↓'}
+            {expanded ? 'Less ↑' : 'More ↓'}
           </button>
         )}
       </div>
@@ -69,7 +69,7 @@ export function PromptCard({ prompt, isAuthenticated, onCopy, onEdit, onDelete }
 
       <div className="flex items-center justify-between mt-auto pt-1">
         <span className="text-xs" style={{ color: '#9CA3AF' }}>
-          {new Date(prompt.createdAt).toLocaleDateString('cs-CZ', {
+          {new Date(prompt.createdAt).toLocaleDateString('en-US', {
             day: 'numeric',
             month: 'short',
             year: 'numeric',
@@ -83,7 +83,7 @@ export function PromptCard({ prompt, isAuthenticated, onCopy, onEdit, onDelete }
                 onClick={() => onEdit(prompt)}
                 className="neuro-circle w-8 h-8 flex items-center justify-center"
                 style={{ color: '#9CA3AF' }}
-                title="Upravit"
+                title="Edit"
               >
                 <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
                   <path
@@ -98,7 +98,7 @@ export function PromptCard({ prompt, isAuthenticated, onCopy, onEdit, onDelete }
                 onClick={() => onDelete(prompt.id)}
                 className="neuro-circle w-8 h-8 flex items-center justify-center hover:text-red-500 transition-colors"
                 style={{ color: '#9CA3AF' }}
-                title="Smazat"
+                title="Delete"
               >
                 <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
                   <path
@@ -115,7 +115,7 @@ export function PromptCard({ prompt, isAuthenticated, onCopy, onEdit, onDelete }
           <button
             onClick={() => onCopy(prompt.content)}
             className="accent-btn w-9 h-9 flex items-center justify-center rounded-full"
-            title="Kopírovat"
+            title="Copy"
           >
             <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
               <rect x="1.5" y="4.5" width="8" height="9" rx="1.5" stroke="white" strokeWidth="1.3" />

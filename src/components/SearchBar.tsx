@@ -16,7 +16,7 @@ export function SearchBar({ value, onChange }: SearchBarProps) {
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder="Hledat prompty — název, obsah, tag..."
+        placeholder="Search prompts — title, content, tag..."
         className="bg-transparent outline-none text-sm flex-1 placeholder-[#9CA3AF] font-medium"
         style={{ color: 'var(--text-primary)' }}
       />

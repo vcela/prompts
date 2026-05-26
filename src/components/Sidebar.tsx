@@ -70,7 +70,7 @@ export function Sidebar({
             <rect x="1" y="8" width="6" height="6" rx="1.5" fill="currentColor" opacity="0.5" />
             <rect x="8" y="8" width="6" height="6" rx="1.5" fill="currentColor" opacity="0.25" />
           </svg>
-          <span className="flex-1">Všechny</span>
+          <span className="flex-1">All</span>
           <span className="text-xs opacity-60 font-normal">{totalCount}</span>
         </button>
 
@@ -109,7 +109,7 @@ export function Sidebar({
             <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
               <path d="M7.5 2V13M2 7.5H13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
-            Přidat kategorii
+            Add category
           </button>
         )}
       </div>
@@ -131,7 +131,7 @@ export function Sidebar({
               onClick={() => signOut()}
               className="shrink-0 transition-colors"
               style={{ color: '#9CA3AF' }}
-              title="Odhlásit se"
+              title="Sign out"
             >
               <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
                 <path
@@ -159,7 +159,7 @@ export function Sidebar({
                 strokeLinejoin="round"
               />
             </svg>
-            Přihlásit se
+            Sign in
           </Link>
         )}
       </div>

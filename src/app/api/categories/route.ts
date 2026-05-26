@@ -32,6 +32,6 @@ export async function POST(request: Request) {
     });
     return NextResponse.json({ ...category, createdAt: category.createdAt.toISOString() });
   } catch {
-    return NextResponse.json({ error: 'Kategorie s tímto názvem již existuje' }, { status: 400 });
+    return NextResponse.json({ error: 'A category with this name already exists' }, { status: 400 });
   }
 }

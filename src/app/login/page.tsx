@@ -25,7 +25,7 @@ export default function LoginPage() {
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error || 'Registrace se nezdařila.');
+        setError(data.error || 'Registration failed.');
         setLoading(false);
         return;
       }
@@ -33,7 +33,7 @@ export default function LoginPage() {
 
     const result = await signIn('credentials', { email, password, redirect: false });
     if (result?.error) {
-      setError(mode === 'register' ? 'Registrace proběhla, ale přihlášení selhalo.' : 'Nesprávný email nebo heslo.');
+      setError(mode === 'register' ? 'Registration succeeded but sign in failed.' : 'Incorrect email or password.');
       setLoading(false);
     } else {
       router.push('/');
@@ -76,7 +76,7 @@ export default function LoginPage() {
             prompts<span style={{ color: 'var(--accent)' }}>.</span>
           </h1>
           <p className="text-sm mt-1" style={{ color: '#9CA3AF' }}>
-            {mode === 'login' ? 'Přihlaste se pro správu promptů' : 'Vytvořte si bezplatný účet'}
+            {mode === 'login' ? 'Sign in to manage your prompts' : 'Create your free account'}
           </p>
         </div>
 
@@ -98,13 +98,13 @@ export default function LoginPage() {
               <path fill="#FBBC05" d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957C.347 6.175 0 7.55 0 9s.348 2.825.957 4.039l3.007-2.332z"/>
               <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z"/>
             </svg>
-            Pokračovat přes Google
+            Continue with Google
           </button>
 
           {/* Divider */}
           <div className="flex items-center gap-3">
             <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.06)' }} />
-            <span className="text-xs" style={{ color: '#9CA3AF' }}>nebo</span>
+            <span className="text-xs" style={{ color: '#9CA3AF' }}>or</span>
             <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.06)' }} />
           </div>
 
@@ -113,7 +113,7 @@ export default function LoginPage() {
             {mode === 'register' && (
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: '#9CA3AF' }}>
-                  Jméno (nepovinné)
+                  Name (optional)
                 </label>
                 <input
                   type="text"
@@ -121,7 +121,7 @@ export default function LoginPage() {
                   onChange={(e) => setName(e.target.value)}
                   className="neuro-inset w-full px-4 py-3 bg-transparent outline-none text-sm font-medium placeholder-[#9CA3AF]"
                   style={{ color: 'var(--text-primary)' }}
-                  placeholder="Vaše jméno"
+                  placeholder="Your name"
                   autoComplete="name"
                 />
               </div>
@@ -137,7 +137,7 @@ export default function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 className="neuro-inset w-full px-4 py-3 bg-transparent outline-none text-sm font-medium placeholder-[#9CA3AF]"
                 style={{ color: 'var(--text-primary)' }}
-                placeholder="vas@email.cz"
+                placeholder="you@example.com"
                 required
                 autoComplete="email"
                 autoFocus
@@ -146,7 +146,7 @@ export default function LoginPage() {
 
             <div>
               <label className="block text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: '#9CA3AF' }}>
-                Heslo {mode === 'register' && <span style={{ color: '#9CA3AF', fontWeight: 400 }}>(min. 8 znaků)</span>}
+                Password {mode === 'register' && <span style={{ color: '#9CA3AF', fontWeight: 400 }}>(min. 8 chars)</span>}
               </label>
               <input
                 type="password"
@@ -173,21 +173,21 @@ export default function LoginPage() {
               style={{ borderRadius: '12px' }}
             >
               {loading
-                ? (mode === 'register' ? 'Registruji...' : 'Přihlašuji...')
-                : (mode === 'register' ? 'Zaregistrovat se' : 'Přihlásit se')}
+                ? (mode === 'register' ? 'Creating account...' : 'Signing in...')
+                : (mode === 'register' ? 'Create account' : 'Sign in')}
             </button>
           </form>
 
           {/* Switch mode */}
           <p className="text-center text-xs" style={{ color: '#9CA3AF' }}>
-            {mode === 'login' ? 'Nemáte účet?' : 'Již máte účet?'}{' '}
+            {mode === 'login' ? "Don't have an account?" : 'Already have an account?'}{' '}
             <button
               type="button"
               onClick={switchMode}
               className="font-semibold hover:opacity-80 transition-opacity"
               style={{ color: 'var(--accent)' }}
             >
-              {mode === 'login' ? 'Zaregistrujte se' : 'Přihlaste se'}
+              {mode === 'login' ? 'Register' : 'Sign in'}
             </button>
           </p>
         </div>

@@ -47,7 +47,7 @@ export function PromptModal({ prompt, categories, onSave, onClose }: PromptModal
       <div className="neuro-raised w-full max-w-lg animate-modal">
         <div className="flex items-center justify-between px-6 pt-6 pb-4">
           <h2 className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>
-            {prompt ? 'Upravit prompt' : 'Nový prompt'}
+            {prompt ? 'Edit prompt' : 'New prompt'}
           </h2>
           <button onClick={onClose} className="neuro-circle w-8 h-8 flex items-center justify-center" style={{ color: '#9CA3AF' }}>
             <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
@@ -59,14 +59,14 @@ export function PromptModal({ prompt, categories, onSave, onClose }: PromptModal
         <form onSubmit={handleSubmit} className="px-6 pb-6 space-y-4">
           <div>
             <label className="block text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: '#9CA3AF' }}>
-              Název
+              Title
             </label>
             <input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="neuro-inset w-full px-4 py-3 bg-transparent outline-none text-sm font-medium placeholder-[#9CA3AF]"
               style={{ color: 'var(--text-primary)' }}
-              placeholder="Výstižný název promptu..."
+              placeholder="A descriptive prompt title..."
               required
               autoFocus
             />
@@ -74,14 +74,14 @@ export function PromptModal({ prompt, categories, onSave, onClose }: PromptModal
 
           <div>
             <label className="block text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: '#9CA3AF' }}>
-              Obsah promptu
+              Content
             </label>
             <textarea
               value={content}
               onChange={(e) => setContent(e.target.value)}
               className="neuro-inset w-full px-4 py-3 bg-transparent outline-none text-sm placeholder-[#9CA3AF] resize-none"
               style={{ color: 'var(--text-primary)' }}
-              placeholder="Celý text promptu..."
+              placeholder="Full prompt text..."
               rows={6}
               required
             />
@@ -90,7 +90,7 @@ export function PromptModal({ prompt, categories, onSave, onClose }: PromptModal
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: '#9CA3AF' }}>
-                Kategorie
+                Category
               </label>
               <div className="relative">
                 <select
@@ -99,7 +99,7 @@ export function PromptModal({ prompt, categories, onSave, onClose }: PromptModal
                   className="neuro-inset w-full px-4 py-3 bg-transparent outline-none text-sm appearance-none cursor-pointer"
                   style={{ color: categoryId ? 'var(--text-primary)' : '#9CA3AF' }}
                 >
-                  <option value="">Bez kategorie</option>
+                  <option value="">No category</option>
                   {categories.map((c) => (
                     <option key={c.id} value={c.id}>{c.name}</option>
                   ))}
@@ -115,7 +115,7 @@ export function PromptModal({ prompt, categories, onSave, onClose }: PromptModal
 
             <div>
               <label className="block text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: '#9CA3AF' }}>
-                Tagy
+                Tags
               </label>
               <input
                 value={tagInput}
@@ -138,14 +138,14 @@ export function PromptModal({ prompt, categories, onSave, onClose }: PromptModal
                 color: 'var(--text-secondary)',
               }}
             >
-              Zrušit
+              Cancel
             </button>
             <button
               type="submit"
               disabled={saving}
               className="flex-1 py-3 text-sm font-semibold rounded-xl accent-btn"
             >
-              {saving ? 'Ukládám...' : prompt ? 'Uložit změny' : 'Přidat prompt'}
+              {saving ? 'Saving...' : prompt ? 'Save changes' : 'Add prompt'}
             </button>
           </div>
         </form>

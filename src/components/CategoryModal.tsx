@@ -38,7 +38,7 @@ export function CategoryModal({ onSave, onClose }: CategoryModalProps) {
       <div className="neuro-raised w-full max-w-sm animate-modal">
         <div className="flex items-center justify-between px-6 pt-6 pb-4">
           <h2 className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>
-            Nová kategorie
+            New category
           </h2>
           <button onClick={onClose} className="neuro-circle w-8 h-8 flex items-center justify-center" style={{ color: '#9CA3AF' }}>
             <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
@@ -50,14 +50,14 @@ export function CategoryModal({ onSave, onClose }: CategoryModalProps) {
         <form onSubmit={handleSubmit} className="px-6 pb-6 space-y-5">
           <div>
             <label className="block text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: '#9CA3AF' }}>
-              Název
+              Name
             </label>
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="neuro-inset w-full px-4 py-3 bg-transparent outline-none text-sm font-medium placeholder-[#9CA3AF]"
               style={{ color: 'var(--text-primary)' }}
-              placeholder="Název kategorie..."
+              placeholder="Category name..."
               required
               autoFocus
             />
@@ -65,7 +65,7 @@ export function CategoryModal({ onSave, onClose }: CategoryModalProps) {
 
           <div>
             <label className="block text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: '#9CA3AF' }}>
-              Barva
+              Color
             </label>
             <div className="flex gap-3 flex-wrap">
               {COLORS.map((c) => (
@@ -98,7 +98,7 @@ export function CategoryModal({ onSave, onClose }: CategoryModalProps) {
                 color: 'var(--text-secondary)',
               }}
             >
-              Zrušit
+              Cancel
             </button>
             <button
               type="submit"
@@ -110,7 +110,7 @@ export function CategoryModal({ onSave, onClose }: CategoryModalProps) {
                 opacity: saving ? 0.7 : 1,
               }}
             >
-              {saving ? 'Ukládám...' : 'Vytvořit'}
+              {saving ? 'Saving...' : 'Create'}
             </button>
           </div>
         </form>

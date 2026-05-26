@@ -4,12 +4,12 @@ import { Providers } from './providers';
 
 export const metadata: Metadata = {
   title: 'Prompt Dashboard',
-  description: 'Správa a organizace promptů',
+  description: 'Manage and organize your prompts',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="cs">
+    <html lang="en">
       <body>
         <Providers>{children}</Providers>
       </body>

@@ -64,7 +64,7 @@ export function Dashboard({ initialPrompts, initialCategories, isAuthenticated, 
 
   const handleCopy = useCallback(async (text: string) => {
     await navigator.clipboard.writeText(text);
-    showToast('Zkopírováno do schránky');
+    showToast('Copied to clipboard');
   }, [showToast]);
 
   const handleAddPrompt = async (data: { title: string; content: string; tags: string[]; categoryId: string | null }) => {
@@ -113,7 +113,7 @@ export function Dashboard({ initialPrompts, initialCategories, isAuthenticated, 
   };
 
   const handleDeletePrompt = async (id: string) => {
-    if (!confirm('Opravdu smazat tento prompt?')) return;
+    if (!confirm('Delete this prompt?')) return;
     const deleted = prompts.find((p) => p.id === id);
     const res = await fetch(`/api/prompts/${id}`, { method: 'DELETE' });
     if (!res.ok) return;
@@ -144,11 +144,7 @@ export function Dashboard({ initialPrompts, initialCategories, isAuthenticated, 
   const toggleTag = (tag: string) =>
     setSelectedTags((prev) => (prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]));
 
-  const promptCount = (n: number) => {
-    if (n === 1) return '1 prompt';
-    if (n < 5) return `${n} prompty`;
-    return `${n} promptů`;
-  };
+  const promptCount = (n: number) => n === 1 ? '1 prompt' : `${n} prompts`;
 
   const hasActiveFilters = searchQuery || selectedTags.length > 0;
 
@@ -179,7 +175,7 @@ export function Dashboard({ initialPrompts, initialCategories, isAuthenticated, 
               <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
                 <path d="M6.5 1V12M1 6.5H12" stroke="white" strokeWidth="2" strokeLinecap="round" />
               </svg>
-              Nový prompt
+              New prompt
             </button>
           )}
         </div>
@@ -225,7 +221,7 @@ export function Dashboard({ initialPrompts, initialCategories, isAuthenticated, 
               className="text-xs font-semibold transition-colors"
               style={{ color: 'var(--accent)' }}
             >
-              Vymazat filtry ×
+              Clear filters ×
             </button>
           )}
         </div>
@@ -257,12 +253,12 @@ export function Dashboard({ initialPrompts, initialCategories, isAuthenticated, 
               </div>
               <div>
                 <p className="font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>
-                  {hasActiveFilters ? 'Žádné výsledky' : 'Zatím žádné prompty'}
+                  {hasActiveFilters ? 'No results' : 'No prompts yet'}
                 </p>
                 <p className="text-xs mt-1" style={{ color: '#9CA3AF' }}>
                   {hasActiveFilters
-                    ? 'Zkuste jiný výraz nebo filtr'
-                    : 'Přidejte první prompt a začněte sbírat'}
+                    ? 'Try a different search or filter'
+                    : 'Add your first prompt to get started'}
                 </p>
               </div>
               {isAuthenticated && !hasActiveFilters && (
@@ -271,7 +267,7 @@ export function Dashboard({ initialPrompts, initialCategories, isAuthenticated, 
                   className="accent-btn px-5 py-2.5 text-sm font-semibold"
                   style={{ borderRadius: '10px' }}
                 >
-                  Přidat první prompt
+                  Add first prompt
                 </button>
               )}
             </div>
