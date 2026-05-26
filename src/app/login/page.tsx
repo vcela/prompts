@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function LoginPage() {
   const [mode, setMode] = useState<'login' | 'register'>('login');
@@ -10,6 +11,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [googleHint, setGoogleHint] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -25,7 +27,12 @@ export default function LoginPage() {
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error || 'Registration failed.');
+        if (data.provider === 'google') {
+          setError('');
+          setGoogleHint(true);
+        } else {
+          setError(data.error || 'Registration failed.');
+        }
         setLoading(false);
         return;
       }
@@ -35,6 +42,7 @@ export default function LoginPage() {
     if (result?.error) {
       setError(mode === 'register' ? 'Registration succeeded but sign in failed.' : 'Incorrect email or password.');
       setLoading(false);
+      return;
     } else {
       router.push('/');
       router.refresh();
@@ -48,6 +56,7 @@ export default function LoginPage() {
   const switchMode = () => {
     setMode(mode === 'login' ? 'register' : 'login');
     setError('');
+    setGoogleHint(false);
     setName('');
     setEmail('');
     setPassword('');
@@ -146,7 +155,14 @@ export default function LoginPage() {
 
             <div>
               <label className="block text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: '#9CA3AF' }}>
-                Password {mode === 'register' && <span style={{ color: '#9CA3AF', fontWeight: 400 }}>(min. 8 chars)</span>}
+                <span className="flex items-center justify-between">
+                Password {mode === 'register' && <span style={{ fontWeight: 400 }}>(min. 8 chars)</span>}
+                {mode === 'login' && (
+                  <Link href="/forgot-password" className="normal-case font-normal tracking-normal hover:opacity-80 transition-opacity" style={{ color: 'var(--accent)' }}>
+                    Forgot password?
+                  </Link>
+                )}
+              </span>
               </label>
               <input
                 type="password"
@@ -159,6 +175,20 @@ export default function LoginPage() {
                 autoComplete={mode === 'register' ? 'new-password' : 'current-password'}
               />
             </div>
+
+            {googleHint && (
+              <div className="text-xs text-center py-3 px-4 rounded-xl space-y-2" style={{ background: 'rgba(66,133,244,0.08)', color: 'var(--text-primary)' }}>
+                <p>This email is linked to a Google account.</p>
+                <button
+                  type="button"
+                  onClick={handleGoogle}
+                  className="font-semibold underline"
+                  style={{ color: '#4285F4' }}
+                >
+                  Sign in with Google instead
+                </button>
+              </div>
+            )}
 
             {error && (
               <p className="text-xs font-medium text-center py-2 px-3 rounded-xl" style={{ background: 'rgba(255,59,48,0.08)', color: '#FF3B30' }}>

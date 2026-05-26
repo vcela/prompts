@@ -14,8 +14,18 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Password must be at least 8 characters' }, { status: 400 });
   }
 
-  const existing = await prisma.user.findUnique({ where: { email } });
+  const existing = await prisma.user.findUnique({
+    where: { email: email.trim().toLowerCase() },
+    include: { accounts: { where: { provider: 'google' } } },
+  });
+
   if (existing) {
+    if (existing.accounts.length > 0) {
+      return NextResponse.json({
+        error: 'This email is linked to a Google account. Please sign in with Google.',
+        provider: 'google',
+      }, { status: 400 });
+    }
     return NextResponse.json({ error: 'This email is already registered' }, { status: 400 });
   }
 
